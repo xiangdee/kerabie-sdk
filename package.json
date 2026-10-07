@@ -1,0 +1,56 @@
+{
+  "name": "@kerabie/sdk",
+  "version": "1.0.1",
+  "description": "Official TypeScript SDK for the Kerabie customer support platform",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "kerabie",
+    "helpdesk",
+    "customer-support",
+    "live-chat",
+    "sdk",
+    "api-client"
+  ],
+  "author": "Kerabie",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiangdee/kerabie-sdk.git"
+  },
+  "homepage": "https://github.com/xiangdee/kerabie-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/xiangdee/kerabie-sdk/issues"
+  }
+}
