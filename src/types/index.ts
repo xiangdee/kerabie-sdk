@@ -410,6 +410,8 @@ export interface InviteAgentParams {
 
 export type KbArticleType = 'faq' | 'article' | 'news' | 'information';
 export type KbArticleStatus = 'draft' | 'published' | 'archived';
+/** Who an article is for: `public` (help center, widget and AI agent), `ai` (the AI agent only), `team` (dashboard only). */
+export type KbArticleVisibility = 'public' | 'ai' | 'team';
 
 export interface KbArticle {
   id: number;
@@ -418,6 +420,7 @@ export interface KbArticle {
   category: string;
   type: KbArticleType;
   status: KbArticleStatus;
+  visibility: KbArticleVisibility;
   imageUrl?: string;
   views: number;
   /** Share of widget visitors who found it helpful (0-100); null until at least 3 have voted. */
@@ -457,6 +460,8 @@ export interface CreateArticleParams {
   category?: string;
   type?: KbArticleType;
   status?: KbArticleStatus;
+  /** Defaults to `public`. */
+  visibility?: KbArticleVisibility;
 }
 
 // ─── Tickets ──────────────────────────────────────────────────────────────────
