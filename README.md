@@ -129,6 +129,26 @@ await kerabie.mcpServers.delete(server.id);
 
 Each switched-on MCP tool counts towards your plan's AI tool limit, the same as your own tools.
 
+#### Public and secure tools (the in-app AI agent)
+
+The in-app AI agent (voice, in your mobile app or on your site) can use your tools **as the signed-in customer**. Every tool is either:
+
+- **public**: runs for anyone, for example searching products. Its answers are cached briefly when the server marks it read-only.
+- **secure**: acts for one customer (cart, orders, addresses, pickups, payments). Kerabie sends the customer's token in the `X-Kerabie-User-Token` header, keeps it encrypted for the length of the call, never shows it to the AI, and only offers the tool while someone is signed in.
+
+When you connect a server, Kerabie suggests the route from each tool's read-only hint and name; you confirm or change it:
+
+```typescript
+await kerabie.mcpServers.update(server.id, {
+  enabledTools: ['search_products', 'add_to_cart', 'list_saved_addresses', 'create_pickup'],
+  secureTools: ['add_to_cart', 'list_saved_addresses', 'create_pickup'], // the rest stay public
+});
+
+await kerabie.aiTools.create({ /* ... */ secure: true }); // your own HTTP tools take the same flag
+```
+
+Your server reads `X-Kerabie-User-Token`, checks it the way it checks any customer token, and acts for that customer. It should never trust a customer id sent in the tool arguments.
+
 ## Contacts
 
 ```typescript

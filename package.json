@@ -1,6 +1,6 @@
 {
   "name": "@kerabie/sdk",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Official TypeScript SDK for the Kerabie customer support platform",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

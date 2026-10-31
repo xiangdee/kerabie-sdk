@@ -754,6 +754,8 @@ export interface AiTool {
   authType: AiToolAuthType;
   /** Dot-notation path into the JSON response; null = the whole response. */
   responsePath: string | null;
+  /** Acts as the signed-in end user in the in-app AI agent: their token is sent in `X-Kerabie-User-Token`, and the tool is only offered while someone is signed in. */
+  secure: boolean;
   enabled: boolean;
   createdAt: string;
   updatedAt: string;
@@ -797,6 +799,8 @@ export interface CreateAiToolParams {
   /** Extra static headers sent on every call (10 at most). */
   headers?: Record<string, string>;
   responsePath?: string;
+  /** Default `false`. Set it for tools that change something or touch the customer's own data (cart, orders, addresses, payments). */
+  secure?: boolean;
   /** Default `true`. */
   enabled?: boolean;
 }
@@ -820,6 +824,8 @@ export interface McpServerTool {
   description: string;
   /** The tool's input as JSON Schema. */
   inputSchema: Record<string, unknown>;
+  /** The server marked the tool read-only (its `readOnlyHint`). */
+  readOnly?: boolean;
 }
 
 export interface McpServer {
@@ -839,6 +845,8 @@ export interface McpServer {
   tools: McpServerTool[];
   /** Names of the tools the chatbot may use. */
   enabledTools: string[];
+  /** Tools that act as the signed-in end user in the in-app AI agent. Suggested when you connect a server; change with `update`. */
+  secureTools: string[];
   lastSyncedAt: string | null;
   /** Why the last sync failed, if it did. */
   lastError: string | null;
@@ -861,6 +869,8 @@ export interface CreateMcpServerParams {
   authType?: 'none' | 'bearer' | 'api_key';
   /** bearer: `{ token }` | api_key: `{ header, value }`. Write-only. */
   authConfig?: Record<string, string>;
+  /** Tools that act as the signed-in end user. Left out, Kerabie suggests from each tool's name and read-only hint. */
+  secureTools?: string[];
 }
 
 export interface UpdateMcpServerParams {
@@ -869,6 +879,8 @@ export interface UpdateMcpServerParams {
   enabled?: boolean;
   /** Tool names to switch on (the rest are switched off). Counts against your plan's AI tool limit. */
   enabledTools?: string[];
+  /** Tool names that act as the signed-in end user (the rest run without one). */
+  secureTools?: string[];
   authType?: 'none' | 'bearer' | 'api_key';
   /** Leave a secret out to keep the stored one. */
   authConfig?: Record<string, string>;
