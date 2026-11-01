@@ -143,7 +143,8 @@ export interface Customer {
   name?: string;
   email?: string;
   phone?: string;
-  avatar?: string;
+  /** Our resized copy of the picture the customer's app gave (never their own link). */
+  avatarUrl?: string;
   externalSource?: string;
   externalRef?: string;
   customAttributes?: Record<string, string>;
